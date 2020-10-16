@@ -27,6 +27,18 @@ def shell():
 ### API CALLS ###
 #################
 
+@app.route('/api/tester/target')
+def target():
+    return jsonify(tester.targets)        
+
+@app.route('/api/tester/target/add', methods=['POST'])
+def target_add():
+    return jsonify({'success': tester.add_tgt(request.json['ip'])})
+
+@app.route('/api/tester/target/del/<int:tgtId>')
+def target_del(tgtId):
+    return jsonify({'success': tester.del_tgt(tgtId)})
+
 @app.route('/api/cmd', methods=['POST'])
 def cmd():
     c = request.json['cmd']

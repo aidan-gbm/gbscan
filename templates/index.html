@@ -7,4 +7,14 @@
 {% block content %}
     <h1>Gingerbread Scanner</h1>
     <p>Current project: {{ instance }}</p>
+
+    <div class="targets">
+        <h2>Target(s)</h2>
+        <select id="targets" multiple></select>
+        <input type="text" id="new-target" placeholder="IP Address">
+        <button id="new-target">Add Target</button>
+        <button id="del-target">Delete Target</button>
+    </div>
+
+    <script src="js/tester.js"></script>
 {% endblock %}

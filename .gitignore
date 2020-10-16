@@ -1,2 +1,4 @@
 .gbscan/*
 *__pycache__
+.vscode/*
+Pipfile*

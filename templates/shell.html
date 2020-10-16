@@ -21,7 +21,7 @@
             $('button#runCmd').click(function() {
                 req = runCmd($('#cmd').val(), function(data) {
                     $('#cmd-window').text(data.ret)
-                }, function() { alert('Command failed.') })
+                }, function() { alert('Error communicating with the backend.') })
             })
         })
     </script>
