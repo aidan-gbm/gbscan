@@ -6,10 +6,9 @@ Created and (hopefully) maintained by theGingerbreadMan.
 * [x] Implement simple webshell for testing
 * [ ] Implement installer for cmd in path (?)
 * Organize file structure
-    * [ ] command line arg for project directory?
-    * [ ] specify project directory from web (maybe store in class?)
-    * [ ] `.gbscan` directory in project folder (root)
-    * [ ] Subdirs: `nmap`, `gobuster`, `nikto` (dep?)
+    * [x] command line arg for project directory
+    * [x] `.gbscan` directory in project folder (root)
+    * [x] Subdirs: `nmap`, `gobuster`, etc.
 * Store command line history
     * [ ] Categorize by type (eg. web, ssh, smb, etc.)
     * [ ] Store in sqlite3 db
