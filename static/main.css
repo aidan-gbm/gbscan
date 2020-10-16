@@ -1,0 +1,18 @@
+body {
+    text-align: center;
+    background-color: gray;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.box {
+    margin: 5%;
+    width: 90%;
+    padding: 10px;
+    color: lightgray;
+    border-radius: 10px;
+    background-color: rgb(46, 46, 46);
+}
+
+h1 {
+    color: rgb(194, 39, 39);
+}
