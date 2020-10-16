@@ -3,9 +3,7 @@ Created and (hopefully) maintained by theGingerbreadMan.
 
 ## TODO
 * [x] Flask main web app
-* [ ] Implement simple command line control from web
-    * [x] basic subprocesses
-    * [ ] styling & error checking
+* [x] Implement simple webshell for testing
 * [ ] Implement installer for cmd in path (?)
 * Organize file structure
     * [ ] command line arg for project directory?

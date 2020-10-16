@@ -1,0 +1,28 @@
+{% extends "main.html" %}
+{% block title %}Shell{% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="css/shell.css">
+{% endblock %}
+
+{% block content %}
+    <h1>Shell</h1>
+    <div class="cmd-box">
+        <textarea id="cmd-window"></textarea>
+        <div class="cmd-line">
+            <input type="text" id="cmd" placeholder="command...">
+            <button id="runCmd">Run</button>
+        </div>
+    </div>
+
+    <script src="js/cmd.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('button#runCmd').click(function() {
+                req = runCmd($('#cmd').val(), function(data) {
+                    $('#cmd-window').text(data.ret)
+                }, function() { alert('Command failed.') })
+            })
+        })
+    </script>
+{% endblock %}

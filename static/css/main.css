@@ -5,8 +5,8 @@ body {
 }
 
 .box {
-    margin: 5%;
-    width: 90%;
+    margin: 2%;
+    display: block;
     padding: 10px;
     color: lightgray;
     border-radius: 10px;
@@ -15,4 +15,14 @@ body {
 
 h1 {
     color: rgb(194, 39, 39);
+    margin-top: 0;
+}
+
+a {
+    color: rgb(100, 161, 241);
+    text-decoration: none;
+}
+
+a:hover {
+    color: rgb(55, 108, 177);
 }
