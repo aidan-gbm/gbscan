@@ -50,10 +50,12 @@ class Tester():
         try:
             ipInt = ip2int(tgtIp)
             db_exec(self.db, ['INSERT INTO targets ( ip ) VALUES ( {} )'.format(ipInt)])
+            idx = db_query(self.db, 'SELECT max(id) FROM targets')[0][0]
+            self.targets.append({'id': idx, 'ip': tgtIp, 'notes': ''})
         except:
             return False
         return True
-
+ 
     def del_tgt(self, tgtId):
         try:
             db_exec(self.db, ['DELETE FROM targets WHERE id = {}'.format(tgtId)])

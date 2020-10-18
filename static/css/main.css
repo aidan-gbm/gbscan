@@ -13,6 +13,21 @@ body {
     background-color: rgb(46, 46, 46);
 }
 
+.sub-box {
+    margin: 2%;
+    padding: 10px;
+    color: black;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: gray;
+    display: inline-block;
+}
+
+.targets select {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
 h1 {
     color: rgb(194, 39, 39);
     margin-top: 0;
