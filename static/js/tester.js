@@ -1,3 +1,5 @@
+// ***** TARGETS *****
+
 function addTarget(ip, success, fail) {
     $.ajax({
         type: 'POST',
@@ -28,6 +30,24 @@ function updateTargets() {
         })
     }, function() { alert('Error communicating with the backend.') })
 }
+
+// ***** ACTIONS *****
+function nmap(type) {
+    var tgt = $('#targets option:selected').text()
+    if ((tgt.match(/\./g) || []).length != 3) {
+        alert('Please select a target first.')
+    } else if (type == 0) {
+        $.ajax({
+            type: 'POST',
+            url: '/api/tester/actions/run',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({ cmd: `nmap -F -oX ^DIR^/nmap/quick.xml ${tgt}`})
+        }).done(function() { alert('Complete')}).fail(function(){ alert('Error communicating with the backend.')})
+    }
+}
+
+// ***** DOCUMENT READY *****
 
 $(document).ready(function() {
     updateTargets()

@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from subprocess import check_output, STDOUT
+from subprocess import check_output, STDOUT, DEVNULL, run as sprun
 from modules.tester import Tester
 import sys
 
@@ -29,7 +29,7 @@ def shell():
 
 @app.route('/api/tester/target')
 def target():
-    return jsonify(tester.targets)        
+    return jsonify(tester.targets)
 
 @app.route('/api/tester/target/add', methods=['POST'])
 def target_add():
@@ -38,6 +38,12 @@ def target_add():
 @app.route('/api/tester/target/del/<int:tgtId>')
 def target_del(tgtId):
     return jsonify({'success': tester.del_tgt(tgtId)})
+
+@app.route('/api/tester/actions/run', methods=['POST'])
+def run():
+    c = request.json['cmd'].replace('^DIR^', tester.path + '/.gbscan')
+    print('[RUN]', c)
+    return jsonify({'success': sprun(c.split(), stdout=DEVNULL).returncode == 0})
 
 @app.route('/api/cmd', methods=['POST'])
 def cmd():
