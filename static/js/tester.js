@@ -17,19 +17,23 @@ function delTarget(name, success, fail) {
     }).done(success).fail(fail)
 }
 
-function getTargets(success, fail) {
-    $.getJSON('/api/tester/target')
+function getTargets(name, success, fail) {
+    var url = (name) ? '/api/tester/target?name=' + name : '/api/tester/target' 
+    $.getJSON(url)
     .done(success)
     .fail(fail)
 }
 
 function updateTargets() {
     $('#targets').empty()
-    getTargets(function(data) {
-        if (Object.keys(data).length < 1) return;
-        console.log(data)
-        for (name in data) {
-            $('#targets').append(`<option value="${name}">${name} - ${data[name]["ip"]}</option>`)
+    getTargets(false, function(data) {
+        if (Object.keys(data).length < 1) {
+            $('#targets').append(`<option value selected disabled>-- add a target --</option>`)
+        } else {
+            for (name in data) {
+                $('#targets').append(`<option value selected disabled>-- select a target --</option>`)
+                $('#targets').append(`<option value="${name}">${name}</option>`)
+            }
         }
     }, function() { alert('Error communicating with the backend.') })
 }
@@ -54,6 +58,14 @@ function nmap(type) {
 
 $(document).ready(function() {
     updateTargets()
+
+    $('select#targets').change(function() {
+        $('#del-target').prop('disabled', false)
+        getTargets($('select#targets option:selected').val(), function(data) {
+            $('#info').empty()
+            $('#info').append(`<li>IP: ${data['ip']}</li>`)
+        }, function() { alert('Error communicating with the backend.') })
+    })
 
     $('button#new-target').click(function() {
         var ip = $('input#ip').val()

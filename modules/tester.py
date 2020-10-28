@@ -58,7 +58,7 @@ class Tester():
  
     def del_tgt(self, tgt):
         try:
-            db_exec(self.db, ['DELETE FROM targets WHERE name = {}'.format(tgt)])
+            db_exec(self.db, ['DELETE FROM targets WHERE name = "{}"'.format(tgt)])
             self.targets.pop(tgt, None)
             return True
         except:

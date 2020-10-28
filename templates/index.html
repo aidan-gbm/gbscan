@@ -8,18 +8,25 @@
     <h1>Gingerbread Scanner</h1>
     <p>Current project: {{ instance }}</p>
 
-    <div class="sub-box targets">
-        <h2>Target(s)</h2>
-        <select id="targets"></select>
-        <input type="text" id="name" placeholder="Name" required>
-        <input type="text" id="ip" placeholder="IP Address" required>
-        <button id="new-target">Add Target</button>
-        <button id="del-target">Delete Target</button>
-    </div>
+    <div class="grid-container">
+        <div class="sub-box target">
+            <h2>Target</h2>
+            <select id="targets"></select>
+            <input type="text" id="name" placeholder="Name" required>
+            <input type="text" id="ip" placeholder="IP Address" required>
+            <button id="new-target">Add Target</button>
+            <button id="del-target" disabled>Delete Target</button>
+        </div>
 
-    <div class="sub-box">
-        <h2>Actions</h2>
-        <button id="nmap-quick" onclick="nmap(0);">Quick Port Scan</button>
+        <div class="sub-box info">
+            <h2>Information</h2>
+            <ul id="info"></ul>
+        </div>
+
+        <div class="sub-box actions">
+            <h2>Actions</h2>
+            <button id="nmap-quick" onclick="nmap(0);">Quick Port Scan</button>
+        </div>
     </div>
 
     <script src="js/tester.js"></script>

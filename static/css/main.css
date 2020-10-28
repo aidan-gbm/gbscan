@@ -1,35 +1,17 @@
+/* GLOBAL ELEMS */
+
 body {
     text-align: center;
     background-color: gray;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-.box {
-    margin: 2%;
-    display: block;
-    padding: 10px;
-    color: lightgray;
-    border-radius: 10px;
-    background-color: rgb(46, 46, 46);
-}
-
-.sub-box {
-    margin: 2%;
-    padding: 10px;
-    color: black;
-    overflow: hidden;
-    border-radius: 10px;
-    background-color: gray;
-    display: inline-block;
-}
-
-.targets select {
-    width: 100%;
-    margin-bottom: 10px;
-}
-
 h1 {
     color: rgb(194, 39, 39);
+    margin-top: 0;
+}
+
+h2 {
     margin-top: 0;
 }
 
@@ -40,4 +22,54 @@ a {
 
 a:hover {
     color: rgb(55, 108, 177);
+}
+
+.sub-box {
+    padding: 10px;
+    color: black;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: gray;
+}
+
+.box {
+    margin: 2%;
+    display: block;
+    padding: 20px;
+    color: lightgray;
+    border-radius: 10px;
+    background-color: rgb(46, 46, 46);
+}
+
+/* GRID ELEMENTS */
+
+.grid-container {
+    display: grid;
+    justify-items: stretch;
+    column-gap: 20px;
+    row-gap: 20px;
+}
+
+.target {
+    grid-row: 1;
+    grid-column: 2 / span 2;
+}
+
+.info {
+    grid-row: 2;
+    grid-column: 1 / span 2;
+}
+
+.actions {
+    grid-row: 2;
+    grid-column: 3 / span 2;
+}
+
+/* SPECIFICS */
+
+.target select {
+    width: 250px;
+    margin: auto;
+    display: block;
+    margin-bottom: 10px;
 }

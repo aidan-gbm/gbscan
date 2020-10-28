@@ -30,10 +30,11 @@ def shell():
 @app.route('/api/tester/target', methods=['GET', 'POST', 'DELETE'])
 def target():
     if request.method == 'GET':
+        if request.args.get('name'):
+            return jsonify(tester.targets[request.args.get('name')])
         return jsonify(tester.targets)
     elif request.method == 'POST':
         tgt = { 'name': request.args.get('name'), 'ip': request.json['ip'] }
-        print(tgt)
         return jsonify({'success': tester.add_tgt(tgt)})
     elif request.method == 'DELETE':
         tgt = request.args.get('name')
