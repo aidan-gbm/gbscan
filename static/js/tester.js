@@ -1,19 +1,20 @@
 // ***** TARGETS *****
 
-function addTarget(ip, success, fail) {
+function addTarget(name, ip, success, fail) {
     $.ajax({
         type: 'POST',
-        url: '/api/tester/target/add',
+        url: '/api/tester/target?name=' + name,
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify({ ip: ip }),
     }).done(success).fail(fail)
 }
 
-function delTarget(id, success, fail) {
-    $.get('/api/tester/target/del/' + id)
-    .done(success)
-    .fail(fail)
+function delTarget(name, success, fail) {
+    $.ajax({
+        type: 'DELETE',
+        url: '/api/tester/target?name=' + name,
+    }).done(success).fail(fail)
 }
 
 function getTargets(success, fail) {
@@ -25,16 +26,18 @@ function getTargets(success, fail) {
 function updateTargets() {
     $('#targets').empty()
     getTargets(function(data) {
-        data.forEach(tgt => {
-            $('#targets').append(`<option value="${tgt.id}">${tgt.ip}</option>`)
-        })
+        if (Object.keys(data).length < 1) return;
+        console.log(data)
+        for (name in data) {
+            $('#targets').append(`<option value="${name}">${name} - ${data[name]["ip"]}</option>`)
+        }
     }, function() { alert('Error communicating with the backend.') })
 }
 
 // ***** ACTIONS *****
 function nmap(type) {
-    var tgt = $('#targets option:selected').text()
-    if ((tgt.match(/\./g) || []).length != 3) {
+    var tgt = $('#targets').val()
+    if (typeof tgt !== 'undefined') {
         alert('Please select a target first.')
     } else if (type == 0) {
         $.ajax({
@@ -53,8 +56,9 @@ $(document).ready(function() {
     updateTargets()
 
     $('button#new-target').click(function() {
-        var ip = $('input#new-target').val()
-        addTarget(ip, function(data) {
+        var ip = $('input#ip').val()
+        var name = $('input#name').val()
+        addTarget(name, ip, function(data) {
             if (data.success) {
                 updateTargets()
             } else { alert('Invalid IP Address') }
@@ -62,11 +66,11 @@ $(document).ready(function() {
     })
 
     $('button#del-target').click(function() {
-        var id = $('select#targets').val()
-        delTarget(id, function(data) {
+        var name = $('#targets').val()
+        delTarget(name, function(data) {
             if (data.success) {
                 updateTargets()
-            } else { alert('Invalid IP Address') }
+            } else { alert('Invalid Target') }
         }, function() { alert('Error communicating with the backend.') })
     })
 })

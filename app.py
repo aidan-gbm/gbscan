@@ -27,17 +27,17 @@ def shell():
 ### API CALLS ###
 #################
 
-@app.route('/api/tester/target')
+@app.route('/api/tester/target', methods=['GET', 'POST', 'DELETE'])
 def target():
-    return jsonify(tester.targets)
-
-@app.route('/api/tester/target/add', methods=['POST'])
-def target_add():
-    return jsonify({'success': tester.add_tgt(request.json['ip'])})
-
-@app.route('/api/tester/target/del/<int:tgtId>')
-def target_del(tgtId):
-    return jsonify({'success': tester.del_tgt(tgtId)})
+    if request.method == 'GET':
+        return jsonify(tester.targets)
+    elif request.method == 'POST':
+        tgt = { 'name': request.args.get('name'), 'ip': request.json['ip'] }
+        print(tgt)
+        return jsonify({'success': tester.add_tgt(tgt)})
+    elif request.method == 'DELETE':
+        tgt = request.args.get('name')
+        return jsonify({'success': tester.del_tgt(tgt)})
 
 @app.route('/api/tester/actions/run', methods=['POST'])
 def run():

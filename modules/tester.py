@@ -38,31 +38,28 @@ class Tester():
         mkdir(self.path + '/.gbscan')
         mkdir(self.path + '/.gbscan/nmap')
         mkdir(self.path + '/.gbscan/gobuster')
-        db_exec(self.db, ['CREATE TABLE targets ( id INTEGER PRIMARY KEY AUTOINCREMENT, ip INTEGER, notes TEXT )'])
+        db_exec(self.db, ['CREATE TABLE targets ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, ip INTEGER, notes TEXT )'])
 
     def load(self):
-        self.targets = []
-        tgts = db_query(self.db, 'SELECT id, ip FROM targets')
+        self.targets = {}
+        tgts = db_query(self.db, 'SELECT name, ip, notes FROM targets')
         for tup in tgts:
-            self.targets.append({'id': tup[0], 'ip': int2ip(tup[1]), 'notes': ''})
+            self.targets[tup[0]] = { 'ip': int2ip(tup[1]), 'notes': tup[2] }
 
-    def add_tgt(self, tgtIp):
+    def add_tgt(self, tgt):
         try:
-            ipInt = ip2int(tgtIp)
-            db_exec(self.db, ['INSERT INTO targets ( ip ) VALUES ( {} )'.format(ipInt)])
-            idx = db_query(self.db, 'SELECT max(id) FROM targets')[0][0]
-            self.targets.append({'id': idx, 'ip': tgtIp, 'notes': ''})
-        except:
+            ipInt = ip2int(tgt['ip'])
+            db_exec(self.db, ['INSERT INTO targets ( name, ip ) VALUES ( "{}", {} )'.format(tgt['name'], ipInt)])
+            self.targets[tgt['name']] = { 'ip': tgt['ip'], 'notes': '' }
+        except Exception as e:
+            print(e)
             return False
         return True
  
-    def del_tgt(self, tgtId):
+    def del_tgt(self, tgt):
         try:
-            db_exec(self.db, ['DELETE FROM targets WHERE id = {}'.format(tgtId)])
-            for i in range(len(self.targets)):
-                if self.targets[i]['id'] == tgtId:
-                    del self.targets[i]
-                    break
+            db_exec(self.db, ['DELETE FROM targets WHERE name = {}'.format(tgt)])
+            self.targets.pop(tgt, None)
             return True
         except:
             return False
