@@ -39,18 +39,27 @@ function updateTargets() {
 }
 
 // ***** ACTIONS *****
+function clearInfo() {
+    $('.info #ip').val('')
+    $('#ports').empty()
+}
+
 function nmap(type) {
     var tgt = $('#targets').val()
-    if (typeof tgt !== 'undefined') {
+    if (typeof tgt === 'undefined') {
         alert('Please select a target first.')
     } else if (type == 0) {
-        $.ajax({
-            type: 'POST',
-            url: '/api/tester/actions/run',
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify({ cmd: `nmap -F -oX ^DIR^/nmap/quick.xml ${tgt}`})
-        }).done(function() { alert('Complete')}).fail(function(){ alert('Error communicating with the backend.')})
+        $.getJSON(`/api/tester/scan?name=${tgt}&mode=quick`)
+        .done(function(data) {
+            if (data.success) {
+                ports = data.result
+                for (p in ports) {
+                    $('.info #ports').append(`<li>${p} (${ports[p].service}): ${ports[p].state}</li>`)
+                }
+            } else [
+                alert('Scan failed.')
+            ]
+        })
     }
 }
 
@@ -62,13 +71,13 @@ $(document).ready(function() {
     $('select#targets').change(function() {
         $('#del-target').prop('disabled', false)
         getTargets($('select#targets option:selected').val(), function(data) {
-            $('#info').empty()
-            $('#info').append(`<li>IP: ${data['ip']}</li>`)
+            clearInfo()
+            $('.info #ip').val(data['ip'])
         }, function() { alert('Error communicating with the backend.') })
     })
 
-    $('button#new-target').click(function() {
-        var ip = $('input#ip').val()
+    $('button #new-target').click(function() {
+        var ip = $('.target #ip').val()
         var name = $('input#name').val()
         addTarget(name, ip, function(data) {
             if (data.success) {
@@ -77,10 +86,11 @@ $(document).ready(function() {
         }, function() { alert('Error communicating with the backend.') })
     })
 
-    $('button#del-target').click(function() {
+    $('button #del-target').click(function() {
         var name = $('#targets').val()
         delTarget(name, function(data) {
             if (data.success) {
+                clearInfo()
                 updateTargets()
             } else { alert('Invalid Target') }
         }, function() { alert('Error communicating with the backend.') })

@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
-from subprocess import check_output, STDOUT, DEVNULL, run as sprun
+from subprocess import check_output, STDOUT
 from modules.tester import Tester
+import modules.nmap as nmap
 import sys
 
 if not len(sys.argv) == 2:
@@ -40,11 +41,25 @@ def target():
         tgt = request.args.get('name')
         return jsonify({'success': tester.del_tgt(tgt)})
 
-@app.route('/api/tester/actions/run', methods=['POST'])
-def run():
-    c = request.json['cmd'].replace('^DIR^', tester.path + '/.gbscan')
-    print('[RUN]', c)
-    return jsonify({'success': sprun(c.split(), stdout=DEVNULL).returncode == 0})
+@app.route('/api/tester/scan', methods=['GET'])
+def scan():
+    name = request.args.get('name')
+    mode = request.args.get('mode')
+    if (mode == 'quick'):
+        (cmd, res) = nmap.scan_quick(tester.targets[name]['ip'], tester.path + '/.gbscan')
+    else:
+        cmd = None
+        res = False
+
+    # Track Commands
+    if (cmd):
+        print('[RUN]', cmd)
+
+    # Return
+    if (res):
+        return jsonify({'success': True, 'result': res})
+    else:
+        return jsonify({'success': res})
 
 @app.route('/api/cmd', methods=['POST'])
 def cmd():

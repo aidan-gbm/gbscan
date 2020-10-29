@@ -41,6 +41,18 @@ a:hover {
     background-color: rgb(46, 46, 46);
 }
 
+.row {
+    display: block;
+    margin: auto;
+    padding: 5px;
+}
+
+.row label {
+    float: left;
+    margin-right: 5px;
+    font-weight: bold;
+}
+
 /* GRID ELEMENTS */
 
 .grid-container {
@@ -72,4 +84,13 @@ a:hover {
     margin: auto;
     display: block;
     margin-bottom: 10px;
+}
+
+.info {
+    padding-left: 30%;
+    padding-right: 30%;
+}
+
+.info ul {
+    list-style: none;
 }
