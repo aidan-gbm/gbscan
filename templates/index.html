@@ -5,36 +5,61 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Gingerbread Scanner</h1>
-    <p>Current project: {{ instance }}</p>
+<h1>Gingerbread Scanner</h1>
+<p>Current project: {{ instance }}</p>
 
-    <div class="grid-container">
-        <div class="sub-box target">
-            <h2>Target</h2>
-            <select id="targets"></select>
-            <input type="text" id="name" placeholder="Name" required>
-            <input type="text" id="ip" placeholder="IP Address" required>
+<div class="row box">
+    <div class="col-4">
+        <div class="sub-box">
+            <div class="row justify-content-center">
+                <h2>Manage Targets</h2>
+            </div>
+            <div class="row mb-2 justify-content-center">
+                <select id="targets"></select>
+            </div>
+            <div class="row mb-2 justify-content-center">
+                <input type="text" id="name" placeholder="Name" required>
+            </div>
+            <div class="row mb-2 justify-content-center">
+                <input type="text" id="ip" placeholder="IP Address" required>
+            </div>
             <button id="new-target">Add Target</button>
             <button id="del-target" disabled>Delete Target</button>
         </div>
 
-        <div class="sub-box info">
-            <h2>Information</h2>
-            <div class="row">
-                <label for="ip">IP</label>
-                <input type="text" id="ip">
+        <div class="sub-box">
+            <div class="row justify-content-center">
+                <h2>Edit Target</h2>
             </div>
-            <div class="row">
-                <label for="ports">Ports</label>
-                <ul id="ports"></ul>
+            <div class="row mb-2 justify-content-center">
+                <input type="text" placeholder="IP Address" id="ip">
             </div>
-        </div>
-
-        <div class="sub-box actions">
-            <h2>Actions</h2>
-            <button id="nmap-quick" onclick="nmap(0);">Quick Port Scan</button>
+            <div class="row mb-2 justify-content-center">
+                <input type="text" placeholder="Port List" id="ports">
+            </div>
+            <button id="update-target">Update</button>
         </div>
     </div>
 
-    <script src="js/tester.js"></script>
+    <div class="col-4">
+        <div class="sub-box">
+            <div class="row justify-content-center">
+                <h2>Service Info</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-4">
+        <div class="sub-box">
+            <div class="row justify-content-center">
+                <h2>Actions</h2>
+            </div>
+            <div class="row mb-2 justify-content-center">
+                <button id="nmap-quick" onclick="nmap(0);">Quick Port Scan</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/tester.js"></script>
 {% endblock %}
