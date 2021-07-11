@@ -9,6 +9,8 @@ Clone the repository, run the application. **Note: gbscan requires sudo privileg
 
 ## TODO
 * [ ] Package for deployment (?)
+* [ ] Add `-f` to force scan without ping check
+* [ ] Improve OS fingerprinting
 * Services
     * [ ] gobuster module
     * [ ] sql module
